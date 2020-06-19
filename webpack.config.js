@@ -11,6 +11,7 @@ module.exports = {
     contentBase: path.join(__dirname, `public`), // eslint-disable-line
     open: false,
     port: 1337,
+    historyApiFallback: true,
   },
 
   module: {

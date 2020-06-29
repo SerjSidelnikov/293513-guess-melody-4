@@ -40,16 +40,6 @@ exports[`Header Header renders correctly 1`] = `
   </svg>
   <div
     className="game__mistakes"
-  >
-    <div
-      className="wrong"
-    />
-    <div
-      className="wrong"
-    />
-    <div
-      className="wrong"
-    />
-  </div>
+  />
 </header>
 `;

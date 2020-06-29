@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import Header from '../header/header';
 import {GameType} from '../../const';
 
-const GameScreen = ({type, children}) => {
+const GameScreen = ({type, mistakes, children}) => {
   return (
     <section className={`game game--${type}`}>
-      <Header/>
+      <Header mistakes={mistakes}/>
 
       {children}
     </section>
@@ -20,6 +21,13 @@ GameScreen.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  mistakes: PropTypes.number.isRequired,
 };
 
-export default GameScreen;
+const mapStateToProps = (state) => ({
+  mistakes: state.mistakes,
+});
+
+export {GameScreen};
+
+export default connect(mapStateToProps)(GameScreen);

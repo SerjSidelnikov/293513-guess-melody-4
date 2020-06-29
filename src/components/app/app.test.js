@@ -1,7 +1,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+import {Provider} from 'react-redux';
+import configureStore from 'redux-mock-store';
 
-import App from './app';
+import {App} from './app';
+
+const mockStore = configureStore([]);
 
 const questions = [
   {
@@ -41,11 +45,20 @@ const questions = [
 
 describe(`App`, () => {
   it(`App renders correctly`, () => {
+    const store = mockStore({
+      mistakes: 0,
+    });
+
     const tree = renderer.create(
-        <App
-          errorsCount={3}
-          questions={questions}
-        />
+        <Provider store={store}>
+          <App
+            maxMistakes={3}
+            questions={questions}
+            onUserAnswer={() => {}}
+            onWelcomeButtonClick={() => {}}
+            step={-1}
+          />
+        </Provider>
     ).toJSON();
 
     expect(tree).toMatchSnapshot();

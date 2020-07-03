@@ -21,6 +21,7 @@ const isGenreAnswerCorrect = (question, userAnswer) => {
 const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
+  RESET: `RESET`,
 };
 
 const ActionCreator = {
@@ -46,6 +47,10 @@ const ActionCreator = {
       payload: answerIsCorrect ? 0 : 1,
     };
   },
+
+  resetGame: () => ({
+    type: ActionType.RESET,
+  }),
 };
 
 const reducer = (state = initialState, action) => {
@@ -69,6 +74,11 @@ const reducer = (state = initialState, action) => {
       }
 
       return Object.assign({}, state, {mistakes});
+
+    case ActionType.RESET:
+      return Object.assign({}, initialState, {
+        step: 0,
+      });
 
     default:
       return state;

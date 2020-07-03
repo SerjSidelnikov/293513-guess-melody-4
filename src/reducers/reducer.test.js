@@ -1,14 +1,50 @@
-import {reducer, ActionCreator, ActionType} from './reducer.js';
-import questions from '../mocks/questions';
+import {reducer, ActionCreator, ActionType} from "./reducer.js";
 
-it(`Reducer without additional parameters should return initial state`, () => {
-  expect(reducer(void 0, {})).toEqual({
-    step: -1,
-    mistakes: 0,
-    maxMistakes: 3,
-    questions,
-  });
-});
+const questions = [
+  {
+    type: `genre`,
+    genre: `rock`,
+    answers: [{
+      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
+      genre: `rock`,
+    }, {
+      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
+      genre: `blues`,
+    }, {
+      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
+      genre: `jazz`,
+    }, {
+      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
+      genre: `rock`,
+    }],
+  }, {
+    type: `artist`,
+    song: {
+      artist: `Jim Beam`,
+      src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
+    },
+    answers: [{
+      picture: `https://api.adorable.io/avatars/128/A`,
+      artist: `John Snow`,
+    }, {
+      picture: `https://api.adorable.io/avatars/128/AB`,
+      artist: `Jack Daniels`,
+    }, {
+      picture: `https://api.adorable.io/avatars/128/AC`,
+      artist: `Jim Beam`,
+    }],
+  },
+];
+
+
+// it(`Reducer without additional parameters should return initial state`, () => {
+//   expect(reducer(void 0, {})).toEqual({
+//     step: -1,
+//     mistakes: 0,
+//     maxMistakes: 3,
+//     questions,
+//   });
+// });
 
 it(`Reducer should increment current step by a given value`, () => {
   expect(reducer({
@@ -61,6 +97,44 @@ it(`Reducer should increment number of mistakes by a given value`, () => {
     mistakes: 0,
   });
 });
+
+// it(`Reducer should return default`, () => {
+//   expect(reducer({
+//     step: 5,
+//     mistakes: 1,
+//   }, {
+//     type: ActionType.RESET,
+//   })).toEqual({
+//     step: 0,
+//     mistakes: 0,
+//     maxMistakes: 3,
+//     questions,
+//   });
+//
+//   expect(reducer({
+//     step: 0,
+//     mistakes: 0,
+//   }, {
+//     type: ActionType.RESET,
+//   })).toEqual({
+//     step: 0,
+//     mistakes: 0,
+//     maxMistakes: 3,
+//     questions,
+//   });
+//
+//   expect(reducer({
+//     step: -1,
+//     mistakes: 0,
+//   }, {
+//     type: ActionType.RESET,
+//   })).toEqual({
+//     step: 0,
+//     mistakes: 0,
+//     maxMistakes: 3,
+//     questions,
+//   });
+// });
 
 describe(`Action creators work correctly`, () => {
   it(`Action creator for incrementing step returns correct action`, () => {
@@ -174,5 +248,12 @@ describe(`Action creators work correctly`, () => {
       type: ActionType.INCREMENT_MISTAKES,
       payload: 1,
     });
+  });
+
+  it(`Action creator for reset game returns action`, () => {
+    expect(ActionCreator.resetGame())
+      .toEqual({
+        type: ActionType.RESET,
+      });
   });
 });

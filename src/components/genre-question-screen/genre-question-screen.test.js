@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import GenreQuestionScreen from './genre-question-screen.jsx';
+import GenreQuestionScreen from './genre-question-screen';
 
 const question = {
   type: `genre`,
@@ -21,21 +21,20 @@ const question = {
   }],
 };
 
-describe(`GenreQuestionScreen`, () => {
-  it(`GenreQuestionScreen is rendered correctly`, () => {
-    const tree = renderer.create(
-        <GenreQuestionScreen
-          question={question}
-          onAnswer={() => {}}
-          renderPlayer={() => {}}
-        />,
-        {
-          createNodeMock: () => {
-            return {};
-          }
-        }
-    ).toJSON();
+it(`GenreQuestionScreen is rendered correctly`, () => {
+  const tree = renderer.create((
+    <GenreQuestionScreen
+      question={question}
+      onAnswer={() => {}}
+      renderPlayer={() => {}}
+      onChange={() => {}}
+      userAnswers={[false, false, false, false]}
+    />
+  ), {
+    createNodeMock: () => {
+      return {};
+    }
+  }).toJSON();
 
-    expect(tree).toMatchSnapshot();
-  });
+  expect(tree).toMatchSnapshot();
 });

@@ -17,8 +17,11 @@ describe(`AudioPlayer`, () => {
         <AudioPlayer
           src={song.src}
           isPlaying={false}
+          isLoading={true}
           onPlayButtonClick={() => {}}
-        />,
+        >
+          <audio/>
+        </AudioPlayer>,
         {
           createNodeMock: () => {
             return {};

@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {GameType} from '../../const';
-import {ActionCreator} from '../../reducers/reducer';
+import {ActionCreator} from '../../reducers/game/game';
 import WelcomeScreen from '../welcome-screen/welcome-screen';
 import GameScreen from '../game-screen/game-screen';
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen';
@@ -13,6 +13,8 @@ import GameOverScreen from '../game-over-screen/game-over-screen';
 import WinScreen from '../win-screen/win-screen';
 import withActivePlayer from '../../hocs/with-active-player/with-active-player';
 import withUserAnswer from '../../hocs/with-user-answer/with-user-answer';
+// import {getStep, getMaxMistakes, getMistakes} from '../../reducers/game/selectors';
+// import {getQuestions} from '../../reducers/data/selectors';
 
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));

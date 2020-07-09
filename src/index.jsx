@@ -8,8 +8,11 @@ import App from './components/app/app';
 import reducer from './reducers/reducer';
 import {createApi} from './api';
 import {Operation as DataOperation} from './reducers/data/data';
+import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from './reducers/user/user';
 
-const onUnauthorized = () => {};
+const onUnauthorized = () => {
+  store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH));
+};
 
 const api = createApi(onUnauthorized);
 
@@ -22,6 +25,7 @@ const store = createStore(
 );
 
 store.dispatch(DataOperation.loadQuestions());
+store.dispatch(UserOperation.checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>

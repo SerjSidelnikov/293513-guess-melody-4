@@ -5,7 +5,7 @@ const WelcomeScreen = ({errorsCount, onWelcomeButtonClick}) => {
   return (
     <section className="welcome">
       <div className="welcome__logo">
-        <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/>
+        <img src="/img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/>
       </div>
 
       <button

@@ -91,6 +91,41 @@ describe(`Game reducer work correctly`, () => {
       maxMistakes: 3,
     });
   });
+
+  it(`Reducer should return step -1`, () => {
+    expect(reducer({
+      step: 5,
+      mistakes: 1,
+    }, {
+      type: ActionType.GO_TO_WELCOME,
+    })).toEqual({
+      step: -1,
+      mistakes: 0,
+      maxMistakes: 3,
+    });
+
+    expect(reducer({
+      step: 0,
+      mistakes: 0,
+    }, {
+      type: ActionType.GO_TO_WELCOME,
+    })).toEqual({
+      step: -1,
+      mistakes: 0,
+      maxMistakes: 3,
+    });
+
+    expect(reducer({
+      step: -1,
+      mistakes: 0,
+    }, {
+      type: ActionType.GO_TO_WELCOME,
+    })).toEqual({
+      step: -1,
+      mistakes: 0,
+      maxMistakes: 3,
+    });
+  });
 });
 
 describe(`Game action creators work correctly`, () => {
@@ -211,6 +246,13 @@ describe(`Game action creators work correctly`, () => {
     expect(ActionCreator.resetGame())
       .toEqual({
         type: ActionType.RESET,
+      });
+  });
+
+  it(`Action creator for go to welcome returns action with null payload`, () => {
+    expect(ActionCreator.goToWelcome())
+      .toEqual({
+        type: ActionType.GO_TO_WELCOME,
       });
   });
 });

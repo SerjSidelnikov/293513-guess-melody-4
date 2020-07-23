@@ -17,6 +17,7 @@ const isGenreAnswerCorrect = (question, userAnswer) => {
 };
 
 const ActionType = {
+  GO_TO_WELCOME: `GO_TO_WELCOME`,
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
   RESET: `RESET`,
@@ -49,6 +50,10 @@ const ActionCreator = {
   resetGame: () => ({
     type: ActionType.RESET,
   }),
+
+  goToWelcome: () => ({
+    type: ActionType.GO_TO_WELCOME,
+  }),
 };
 
 const reducer = (state = initialState, action) => {
@@ -66,6 +71,11 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET:
       return Object.assign({}, initialState, {
         step: 0,
+      });
+
+    case ActionType.GO_TO_WELCOME:
+      return Object.assign({}, initialState, {
+        step: -1,
       });
 
     default:

@@ -35,7 +35,7 @@ class AuthScreen extends React.PureComponent {
         <form
           className="login__form"
           action=""
-          onSubmit={this.handleSubmit}
+          onSubmit={this._handleSubmit}
         >
           <p className="login__field">
             <label className="login__label" htmlFor="name">Логин</label>

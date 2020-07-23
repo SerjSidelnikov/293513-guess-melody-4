@@ -27,6 +27,7 @@ exports[`AuthScreen AuthScreen is render correctly 1`] = `
   <form
     action=""
     className="login__form"
+    onSubmit={[Function]}
   >
     <p
       className="login__field"

@@ -1,15 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 
 import Mistakes from '../mistakes/mistakes';
+import {AppRoute} from '../../const';
 
-const Header = ({mistakes}) => {
+const Header = ({mistakes, onClickBack}) => {
   return (
     <header className="game__header">
-      <a className="game__back" href="#">
+      <Link
+        to={AppRoute.ROOT}
+        className="game__back"
+        onClick={onClickBack}
+      >
         <span className="visually-hidden">Сыграть ещё раз</span>
         <img className="game__logo" src="img/melody-logo-ginger.png" alt="Угадай мелодию"/>
-      </a>
+      </Link>
 
       <svg xmlns="http://www.w3.org/2000/svg" className="timer" viewBox="0 0 780 780">
         <circle
@@ -28,6 +34,7 @@ const Header = ({mistakes}) => {
 
 Header.propTypes = {
   mistakes: PropTypes.number.isRequired,
+  onClickBack: PropTypes.func.isRequired,
 };
 
 export default Header;

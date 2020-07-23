@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
+
+import {AppRoute} from '../../const';
 
 const WinScreen = ({questionsCount, mistakesCount, onReplayButtonClick}) => {
   const correctlyQuestionsCount = questionsCount - mistakesCount;
@@ -7,17 +10,17 @@ const WinScreen = ({questionsCount, mistakesCount, onReplayButtonClick}) => {
   return (
     <section className="result">
       <div className="result__logo">
-        <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" />
+        <img src="/img/melody-logo.png" alt="Угадай мелодию" width="186" height="83" />
       </div>
       <h2 className="result__title">Вы настоящий меломан!</h2>
       <p className="result__total">Вы ответили правильно на {correctlyQuestionsCount} вопросов и совершили {mistakesCount} ошибки</p>
-      <button
+      <Link
+        to={AppRoute.ROOT}
         className="replay"
-        type="button"
         onClick={onReplayButtonClick}
       >
         Сыграть ещё раз
-      </button>
+      </Link>
     </section>
   );
 };

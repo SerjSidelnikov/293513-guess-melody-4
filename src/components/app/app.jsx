@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Router, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {GameType} from '../../const';
@@ -11,6 +11,7 @@ import GenreQuestionScreen from '../genre-question-screen/genre-question-screen'
 import GameOverScreen from '../game-over-screen/game-over-screen';
 import AuthScreen from '../authScreen/authScreen';
 import WinScreen from '../win-screen/win-screen';
+import PrivateRoute from '../private-route/private-route';
 import withActivePlayer from '../../hocs/with-active-player/with-active-player';
 import withUserAnswer from '../../hocs/with-user-answer/with-user-answer';
 import {ActionCreator} from '../../reducers/game/game';
@@ -19,6 +20,8 @@ import {getStep, getMaxMistakes, getMistakes} from '../../reducers/game/selector
 import {getQuestions} from '../../reducers/data/selectors';
 import {getAuthorizationStatus} from '../../reducers/user/selectors';
 import {Operation as UserOperation} from '../../reducers/user/user';
+import history from '../../history';
+import {AppRoute} from '../../const';
 
 const ArtistQuestionScreenWrapped = withActivePlayer(ArtistQuestionScreen);
 const GenreQuestionScreenWrapped = withActivePlayer(withUserAnswer(GenreQuestionScreen));
@@ -27,13 +30,11 @@ class App extends React.PureComponent {
   _renderGameScreen() {
     const {
       authorizationStatus,
-      login,
       mistakes,
       maxMistakes,
       questions,
       onUserAnswer,
       onWelcomeButtonClick,
-      resetGame,
       step,
     } = this.props;
     const question = questions[step];
@@ -48,27 +49,14 @@ class App extends React.PureComponent {
     }
 
     if (mistakes >= maxMistakes) {
-      return (
-        <GameOverScreen onReplayButtonClick={resetGame}/>
-      );
+      return history.push(AppRoute.LOSE);
     }
 
     if (step >= questions.length) {
       if (authorizationStatus === AuthorizationStatus.AUTH) {
-        return (
-          <WinScreen
-            onReplayButtonClick={resetGame}
-            questionsCount={questions.length}
-            mistakesCount={mistakes}
-          />
-        );
+        return history.push(AppRoute.RESULT);
       } else if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-        return (
-          <AuthScreen
-            onReplayButtonClick={resetGame}
-            onSubmit={login}
-          />
-        );
+        return history.push(AppRoute.LOGIN);
       }
 
       return null;
@@ -102,32 +90,36 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const {questions} = this.props;
+    const {questions, mistakes, resetGame, login} = this.props;
 
     return (
-      <Router>
+      <Router history={history}>
         <Switch>
-          <Route exact path={`/`}>
+          <Route exact path={AppRoute.ROOT}>
             {this._renderGameScreen()}
           </Route>
-          <Route exact path={`/artist`}>
-            <ArtistQuestionScreenWrapped
-              question={questions[1]}
-              onAnswer={() => {}}
-            />
-          </Route>
-          <Route exact path={`/genre`}>
-            <GenreQuestionScreenWrapped
-              question={questions[0]}
-              onAnswer={() => {}}
-            />
-          </Route>
-          <Route exact path={`/auth`}>
+          <Route exact path={AppRoute.LOGIN}>
             <AuthScreen
-              onReplayButtonClick={() => {}}
-              onSubmit={() => {}}
+              onReplayButtonClick={resetGame}
+              onSubmit={login}
             />
           </Route>
+          <Route exact path={AppRoute.LOSE}>
+            <GameOverScreen
+              onReplayButtonClick={resetGame}
+            />
+          </Route>
+          <PrivateRoute
+            exact
+            path={AppRoute.RESULT}
+            render={() => (
+              <WinScreen
+                onReplayButtonClick={resetGame}
+                questionsCount={questions.length}
+                mistakesCount={mistakes}
+              />
+            )}
+          />
         </Switch>
       </Router>
     );
